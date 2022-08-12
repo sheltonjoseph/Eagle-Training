@@ -11,17 +11,20 @@ import CreditScoreIcon from "@mui/icons-material/CreditScore";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import PhoneIcon from "@mui/icons-material/Phone";
 import LanguageIcon from "@mui/icons-material/Language";
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText'
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import EditUser from "./EditUser";
 
-const SingleCard = ({ item , key, ...prop}) => {
-
-  console.log(prop)
+const SingleCard = ({ item, key, ...prop }) => {
   const [userImg, setUserImg] = useState("");
-
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [name, setName] = useState(item.name);
+  const [email, setEmail] = useState(item.email);
+  const [phone, setPhone] = useState(item.phone);
+  const [website, setWebsite] = useState(item.website);
   const getUserImg = async () => {
     try {
       await axios.get(
@@ -39,30 +42,32 @@ const SingleCard = ({ item , key, ...prop}) => {
 
   const removeUser = () => {
     prop.removeUser(item.id);
-  }
- 
+  };
 
   return (
-    <Card sx={{ width: 340, m: 2 }}>
-      <CardMedia component="img" image={userImg} />
-      <List>
-      <ListItem >
-      <Typography variant="h5" enablePadding>{item.name}</Typography>
+    <>
+      <Card sx={{ width: 340, m: 2 }}>
+        <CardMedia component="img" image={userImg} />
+        <List>
+          <ListItem>
+            <Typography variant="h5" enablePadding>
+              {name}
+            </Typography>
           </ListItem>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                <MailOutlineIcon/>
+                <MailOutlineIcon />
               </ListItemIcon>
-              <ListItemText primary={item.email} />
+              <ListItemText primary={email} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
-                <PhoneIcon  />
+                <PhoneIcon />
               </ListItemIcon>
-              <ListItemText primary={item.phone} />
+              <ListItemText primary={phone} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
@@ -70,23 +75,36 @@ const SingleCard = ({ item , key, ...prop}) => {
               <ListItemIcon>
                 <LanguageIcon />
               </ListItemIcon>
-              <ListItemText primary={item.website} />
+              <ListItemText primary={website} />
             </ListItemButton>
           </ListItem>
         </List>
-      
-      <CardActions m="20px">
-        <IconButton aria-label="FavoriteBorderIcon" color="secondary">
-          <FavoriteBorderIcon />
-        </IconButton>
-        <IconButton aria-label="CreditScoreIcon" color="primary">
-          <CreditScoreIcon />
-        </IconButton>
-        <IconButton aria-label="delete" align="right">
-          <DeleteIcon  onClick={removeUser}/>
-        </IconButton>
-      </CardActions>
-    </Card>
+
+        <CardActions m="20px">
+          <IconButton aria-label="FavoriteBorderIcon" color="secondary">
+            <FavoriteBorderIcon />
+          </IconButton>
+          <IconButton aria-label="CreditScoreIcon" color="primary">
+            <CreditScoreIcon onClick={() => setModalIsOpen(true)} />
+          </IconButton>
+          <IconButton aria-label="delete" align="right">
+            <DeleteIcon onClick={removeUser} />
+          </IconButton>
+        </CardActions>
+      </Card>
+      <EditUser
+        modalIsOpen={modalIsOpen}
+        setModalIsOpen={setModalIsOpen}
+        name={name}
+        email={email}
+        phone={phone}
+        website={website}
+        setName={setName}
+        setEmail={setEmail}
+        setPhone={setPhone}
+        setWebsite={setWebsite}
+      />
+    </>
   );
 };
 
