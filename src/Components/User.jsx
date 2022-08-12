@@ -20,7 +20,7 @@ import EditUser from "./EditUser";
 
 const SingleCard = ({ item, key, ...prop }) => {
   const [userImg, setUserImg] = useState("");
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
   const [name, setName] = useState(item.name);
   const [email, setEmail] = useState(item.email);
   const [phone, setPhone] = useState(item.phone);
@@ -43,6 +43,11 @@ const SingleCard = ({ item, key, ...prop }) => {
   const removeUser = () => {
     prop.removeUser(item.id);
   };
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
 
   return (
     <>
@@ -85,7 +90,7 @@ const SingleCard = ({ item, key, ...prop }) => {
             <FavoriteBorderIcon />
           </IconButton>
           <IconButton aria-label="CreditScoreIcon" color="primary">
-            <CreditScoreIcon onClick={() => setModalIsOpen(true)} />
+            <CreditScoreIcon onClick={handleClick} aria-describedby={item.id} />
           </IconButton>
           <IconButton aria-label="delete" align="right">
             <DeleteIcon onClick={removeUser} />
@@ -93,8 +98,8 @@ const SingleCard = ({ item, key, ...prop }) => {
         </CardActions>
       </Card>
       <EditUser
-        modalIsOpen={modalIsOpen}
-        setModalIsOpen={setModalIsOpen}
+        anchorEl={anchorEl}
+        setAnchorEl={setAnchorEl}
         name={name}
         email={email}
         phone={phone}
