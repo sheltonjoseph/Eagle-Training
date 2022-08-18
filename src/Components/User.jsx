@@ -17,6 +17,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import EditUser from "./EditUser";
+import { useSelector} from "react-redux";
 
 const SingleCard = ({ item, key, ...prop }) => {
   const [userImg, setUserImg] = useState("");
@@ -25,6 +26,9 @@ const SingleCard = ({ item, key, ...prop }) => {
   const [email, setEmail] = useState(item.email);
   const [phone, setPhone] = useState(item.phone);
   const [website, setWebsite] = useState(item.website);
+  const[reduxName , setReduxName] = useState('')
+  const[reduxEmail , setReduxEmail] = useState('')
+  const user = useSelector((state) => state.user);
   const getUserImg = async () => {
     try {
       await axios.get(
@@ -56,7 +60,7 @@ const SingleCard = ({ item, key, ...prop }) => {
         <List>
           <ListItem>
             <Typography variant="h5" enablePadding>
-              {name}
+              {user.reduxName}
             </Typography>
           </ListItem>
           <ListItem disablePadding>
@@ -64,7 +68,7 @@ const SingleCard = ({ item, key, ...prop }) => {
               <ListItemIcon>
                 <MailOutlineIcon />
               </ListItemIcon>
-              <ListItemText primary={email} />
+              <ListItemText primary= {user.reduxEmail} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
@@ -108,6 +112,10 @@ const SingleCard = ({ item, key, ...prop }) => {
         setEmail={setEmail}
         setPhone={setPhone}
         setWebsite={setWebsite}
+        reduxName={reduxName}
+        reduxEmail={reduxEmail}
+        setReduxName={setReduxName}
+        setReduxEmail={setReduxEmail}
       />
     </>
   );
