@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Popover from "@mui/material/Popover";
 
+
 const EditUser = ({
   anchorEl,
   setAnchorEl,
@@ -18,6 +19,7 @@ const EditUser = ({
   setEmail,
   setPhone,
   setWebsite,
+  isFromNamebar
 }) => {
 
   const handleClose = () => {
@@ -43,7 +45,7 @@ const EditUser = ({
       <List>
         <ListItem sx={{ display: "flex", justifyContent: "center" }}>
           <Typography variant="h5" justifyContent="center">
-            EDIT
+            {isFromNamebar ? "Add": "EDIT"  }
           </Typography>
         </ListItem>
         <ListItem>
