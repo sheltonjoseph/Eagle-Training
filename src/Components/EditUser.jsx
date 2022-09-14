@@ -11,28 +11,26 @@ import { update } from "../Redux/userSlice";
 const EditUser = ({
   anchorEl,
   setAnchorEl,
-  // name,
-  // email,
+  name,
+  email,
   phone,
   website,
-  // setName,
-  // setEmail,
+  setName,
+  setEmail,
   setPhone,
   setWebsite,
-  setReduxEmail,
-  setReduxName,
-  reduxName,
-  reduxEmail,
+  // setReduxEmail,
+  // setReduxName,
+  // reduxName,
+  // reduxEmail,
   isFromNamebar
 }) => {
   
   const open = Boolean(anchorEl);
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
+
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    dispatch(update({reduxName,reduxEmail}));
     setAnchorEl(null);
   };
 
@@ -61,18 +59,18 @@ const EditUser = ({
           <TextField
             id="standard-basic"
             label="Name"
-            defaultValue={user.reduxName}
+            defaultValue={name}
             variant="standard"
-            onChange={(e) => setReduxName(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
           />
         </ListItem>
         <ListItem>
           <TextField
             id="standard-basic"
             label="Email"
-            defaultValue={user.reduxEmail}
+            defaultValue={email}
             variant="standard"
-            onChange={(e) => setReduxEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </ListItem>
         <ListItem>
