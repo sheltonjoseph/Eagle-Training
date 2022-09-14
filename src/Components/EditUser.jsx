@@ -23,6 +23,7 @@ const EditUser = ({
   setReduxName,
   reduxName,
   reduxEmail,
+  isFromNamebar
 }) => {
   
   const open = Boolean(anchorEl);
@@ -53,7 +54,7 @@ const EditUser = ({
       <List>
         <ListItem sx={{ display: "flex", justifyContent: "center" }}>
           <Typography variant="h5" justifyContent="center">
-            EDIT
+            {isFromNamebar ? "Add": "EDIT"  }
           </Typography>
         </ListItem>
         <ListItem>
