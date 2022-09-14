@@ -1,15 +1,43 @@
-import React from "react";
+import React,{useState} from "react";
 import styled from "styled-components";
+import Button from "@mui/material/Button";
+import PersonIcon from "@mui/icons-material/Person";
+import EditUser from "./EditUser";
 
 const Namebar = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
   return (
     <Wrapper>
       <Left>
         <Name>Eagle Enterprise Manager</Name>
       </Left>
+      <Button
+        variant="contained"
+        sx={{
+          backgroundColor: "#fff",
+          "&:hover": {
+            backgroundColor: "#ab47bc",
+            color: "#fff",
+          },
+          color:"#ab47bc"
+        }}
+        endIcon={<PersonIcon />}
+        onClick={handleClick} 
+      >
+        ADD NEW USER
+      </Button>
       <Right>
         <Name>EAGLE</Name>
       </Right>
+      <EditUser
+        anchorEl={anchorEl}
+        setAnchorEl={setAnchorEl}
+        isFromNamebar
+      />
     </Wrapper>
   );
 };

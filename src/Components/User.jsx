@@ -60,7 +60,7 @@ const SingleCard = ({ item, key, ...prop }) => {
         <List>
           <ListItem>
             <Typography variant="h5" enablePadding>
-              {user.reduxName}
+              {name}
             </Typography>
           </ListItem>
           <ListItem disablePadding>
@@ -68,7 +68,7 @@ const SingleCard = ({ item, key, ...prop }) => {
               <ListItemIcon>
                 <MailOutlineIcon />
               </ListItemIcon>
-              <ListItemText primary= {user.reduxEmail} />
+              <ListItemText primary= {email} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
