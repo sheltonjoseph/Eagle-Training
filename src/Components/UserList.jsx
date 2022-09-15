@@ -5,30 +5,37 @@ import SingleCard from "./User";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
-  // const [userImg, setUserImg] = useState("");
+
+
+  const deleteUser= async (id) => {
+    try {
+      const deleteUser = await fetch(`http://localhost:5000/users/${id}`, {
+        method: "DELETE",
+      });
+      setUsers(users.filter(users => users.user_id !== id))
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
   useEffect(() => {
     const getUsers = async () => {
       try {
-        const res = await axios.get(
-          "https://jsonplaceholder.typicode.com/users"
-        );
-        setUsers(res.data);
+        const getResponse = await fetch("http://localhost:5000/users");
+        const jsonData = await getResponse.json();
+        setUsers(jsonData);
       } catch (err) {
-        console.log(err);
+        console.log(err.message);
       }
     };
     getUsers();
-  }, []);
-
-  const removeUser = (id) => {
-    setUsers(users.filter(item=>item.id !== id))
- }
+  }, [users]);
 
   return (
     <Container>
       {users.map((item) => (
-        <SingleCard  item={item} key={item.id} removeUser={removeUser} />
-      ))}
+      <SingleCard item={item} deleteUser={deleteUser}/>
+       ))}
     </Container>
   );
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import TextField from "@mui/material/TextField";
@@ -8,28 +8,47 @@ import Popover from "@mui/material/Popover";
 import { useSelector, useDispatch } from "react-redux";
 import { update } from "../Redux/userSlice";
 
-const EditUser = ({
+const EditUser = (
+  {
   anchorEl,
   setAnchorEl,
-  name,
-  email,
-  phone,
-  website,
-  setName,
-  setEmail,
-  setPhone,
-  setWebsite,
-  // setReduxEmail,
-  // setReduxName,
-  // reduxName,
-  // reduxEmail,
+  item,
   isFromNamebar
-}) => {
-  
+}
+) => {
+  const [username, setUsername] = useState(isFromNamebar ?'':item.username);
+  const [email, setEmail] = useState(isFromNamebar ?'':item.email);
+  const [phone, setPhone] = useState(isFromNamebar ?'':item.phone);
+  const [website, setWebsite] = useState(isFromNamebar ?'':item.website);
+  const[img,setImg] = useState(isFromNamebar ?'':item.img)
+
   const open = Boolean(anchorEl);
 
 
-  const handleUpdate = (e) => {
+
+  const onDone = async (e) => {
+    e.preventDefault();
+    try {
+      const body = { username,email,phone,website,img };
+      console.log(body)
+      const response = await fetch("http://localhost:5000/users", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      setAnchorEl(null);
+      setUsername('')
+      setEmail('')
+      setPhone('')
+      setWebsite('')
+      setImg('')
+      console.log(response)
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  const handleClose = (e) => {
     e.preventDefault();
     setAnchorEl(null);
   };
@@ -46,7 +65,7 @@ const EditUser = ({
       }}
       open={open}
       anchorEl={anchorEl}
-      onClose={handleUpdate}
+      onClose={handleClose}
       BackdropProps={{ invisible: false }}
     >
       <List>
@@ -59,9 +78,13 @@ const EditUser = ({
           <TextField
             id="standard-basic"
             label="Name"
-            defaultValue={name}
+            value={username}
+            //defaultValue={username}
             variant="standard"
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => {
+              setUsername(e.target.value)}
+            }
+              
           />
         </ListItem>
         <ListItem>
@@ -91,10 +114,19 @@ const EditUser = ({
             onChange={(e) => setWebsite(e.target.value)}
           />
         </ListItem>
+        <ListItem>
+          <TextField
+            id="standard-basic"
+            label="Image URL"
+            defaultValue={img}
+            variant="standard"
+            onChange={(e) => setImg(e.target.value)}
+          />
+        </ListItem>
         <ListItem
           sx={{ display: "flex", justifyContent: "center", marginTop: "15px" }}
         >
-          <Button variant="contained" onClick={handleUpdate}>
+          <Button variant="contained" onClick={onDone}>
             Done
           </Button>
         </ListItem>
