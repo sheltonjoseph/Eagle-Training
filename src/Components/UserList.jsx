@@ -13,28 +13,35 @@ const Users = () => {
         method: "DELETE",
       });
       setUsers(users.filter(users => users.user_id !== id))
+      setIsGetUser(true)
     } catch (err) {
       console.log(err.message);
     }
   };
 
+  const getUsers = async () => {
+    try {
+      const getResponse = await fetch("http://localhost:5000/users");
+      const jsonData = await getResponse.json();
+      setUsers(jsonData);
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  const [isGetUser, setIsGetUser] = useState(true)
+
   useEffect(() => {
-    const getUsers = async () => {
-      try {
-        const getResponse = await fetch("http://localhost:5000/users");
-        const jsonData = await getResponse.json();
-        setUsers(jsonData);
-      } catch (err) {
-        console.log(err.message);
-      }
-    };
-    getUsers();
-  }, [users]);
+    if(isGetUser) {
+     getUsers();
+     setIsGetUser(false)
+    }
+  });
 
   return (
     <Container>
-      {users.map((item) => (
-      <SingleCard item={item} deleteUser={deleteUser}/>
+      {users.reverse().map((item) => (
+      <SingleCard item={item} deleteUser={deleteUser} setIsGetUser={setIsGetUser}/>
        ))}
     </Container>
   );

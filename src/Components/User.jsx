@@ -17,11 +17,20 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import EditUser from "./EditUser";
+import DeleteDialog from "./DeleteDialog"
 // import { useSelector} from "react-redux";
 
 const SingleCard = ({ item, key, ...prop }) => {
   const [anchorEl, setAnchorEl] = useState(null);
- 
+  const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+  
+  const refreshUser = () => {
+    prop.setIsGetUser(true);
+  };
 
   const removeUser = () => {
     prop.deleteUser(item.user_id);
@@ -76,7 +85,7 @@ const SingleCard = ({ item, key, ...prop }) => {
             <CreditScoreIcon onClick={handleClick} aria-describedby={item.id} />
           </IconButton>
           <IconButton aria-label="delete" align="right">
-            <DeleteIcon onClick={removeUser} />
+            <DeleteIcon onClick={handleClickOpen} />
           </IconButton>
         </CardActions>
       </Card>
@@ -84,12 +93,14 @@ const SingleCard = ({ item, key, ...prop }) => {
         anchorEl={anchorEl}
         setAnchorEl={setAnchorEl}
         item={item}
+        refreshUser={refreshUser}
         // onDone={onDone}
         // reduxName={reduxName}
         // reduxEmail={reduxEmail}
         // setReduxName={setReduxName}
         // setReduxEmail={setReduxEmail}
       />
+      <DeleteDialog open={open} setOpen={setOpen}  item={item} removeUser={removeUser} />
     </>
   );
 };
