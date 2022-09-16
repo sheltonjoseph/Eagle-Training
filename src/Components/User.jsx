@@ -4,7 +4,7 @@ import CardActions from "@mui/material/CardActions";
 import CardMedia from "@mui/material/CardMedia";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import axios from "axios";
+// import axios from "axios";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import CreditScoreIcon from "@mui/icons-material/CreditScore";
@@ -17,35 +17,14 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import EditUser from "./EditUser";
-import { useSelector} from "react-redux";
+// import { useSelector} from "react-redux";
 
 const SingleCard = ({ item, key, ...prop }) => {
-  const [userImg, setUserImg] = useState("");
   const [anchorEl, setAnchorEl] = useState(null);
-  const [name, setName] = useState(item.name);
-  const [email, setEmail] = useState(item.email);
-  const [phone, setPhone] = useState(item.phone);
-  const [website, setWebsite] = useState(item.website);
-  const[reduxName , setReduxName] = useState('')
-  const[reduxEmail , setReduxEmail] = useState('')
-  const user = useSelector((state) => state.user);
-  const getUserImg = async () => {
-    try {
-      await axios.get(
-        "https://avatars.dicebear.com/v2/avataaars/%7B%7Busername%7D%7D.svg?options[mood][]=happy"
-      );
-      setUserImg(
-        `https://avatars.dicebear.com/v2/avataaars/%7B%7B${item.name}%7D%7D.svg?options[mood][]=happy`
-      );
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  getUserImg();
+ 
 
   const removeUser = () => {
-    prop.removeUser(item.id);
+    prop.deleteUser(item.user_id);
   };
 
   const handleClick = (event) => {
@@ -56,11 +35,11 @@ const SingleCard = ({ item, key, ...prop }) => {
   return (
     <>
       <Card sx={{ width: 340, m: 2 }}>
-        <CardMedia component="img" image={userImg} />
+        <CardMedia component="img" image={item.img} />
         <List>
           <ListItem>
             <Typography variant="h5" enablePadding>
-              {name}
+              {item.username}
             </Typography>
           </ListItem>
           <ListItem disablePadding>
@@ -68,7 +47,7 @@ const SingleCard = ({ item, key, ...prop }) => {
               <ListItemIcon>
                 <MailOutlineIcon />
               </ListItemIcon>
-              <ListItemText primary= {email} />
+              <ListItemText primary= {item.email} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
@@ -76,7 +55,7 @@ const SingleCard = ({ item, key, ...prop }) => {
               <ListItemIcon>
                 <PhoneIcon />
               </ListItemIcon>
-              <ListItemText primary={phone} />
+              <ListItemText primary={item.phone} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
@@ -84,7 +63,7 @@ const SingleCard = ({ item, key, ...prop }) => {
               <ListItemIcon>
                 <LanguageIcon />
               </ListItemIcon>
-              <ListItemText primary={website} />
+              <ListItemText primary={item.website} />
             </ListItemButton>
           </ListItem>
         </List>
@@ -104,18 +83,12 @@ const SingleCard = ({ item, key, ...prop }) => {
       <EditUser
         anchorEl={anchorEl}
         setAnchorEl={setAnchorEl}
-        name={name}
-        email={email}
-        phone={phone}
-        website={website}
-        setName={setName}
-        setEmail={setEmail}
-        setPhone={setPhone}
-        setWebsite={setWebsite}
-        reduxName={reduxName}
-        reduxEmail={reduxEmail}
-        setReduxName={setReduxName}
-        setReduxEmail={setReduxEmail}
+        item={item}
+        // onDone={onDone}
+        // reduxName={reduxName}
+        // reduxEmail={reduxEmail}
+        // setReduxName={setReduxName}
+        // setReduxEmail={setReduxEmail}
       />
     </>
   );
