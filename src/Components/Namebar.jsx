@@ -1,14 +1,19 @@
-import React,{useState} from "react";
+import React, { useState , useEffect } from "react";
 import styled from "styled-components";
 import Button from "@mui/material/Button";
 import PersonIcon from "@mui/icons-material/Person";
 import EditUser from "./EditUser";
 
-const Namebar = () => {
+const Namebar = ({setIsGetUser}) => {
   const [anchorEl, setAnchorEl] = useState(null);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+  const refreshUser = () => {
+    setIsGetUser(true);
+  };
+
 
   return (
     <Wrapper>
@@ -23,10 +28,10 @@ const Namebar = () => {
             backgroundColor: "#ab47bc",
             color: "#fff",
           },
-          color:"#ab47bc"
+          color: "#ab47bc",
         }}
         endIcon={<PersonIcon />}
-        onClick={handleClick} 
+        onClick={handleClick}
       >
         ADD NEW USER
       </Button>
@@ -37,6 +42,7 @@ const Namebar = () => {
         anchorEl={anchorEl}
         setAnchorEl={setAnchorEl}
         isFromNamebar
+        refreshUser={refreshUser}
       />
     </Wrapper>
   );
