@@ -20,20 +20,22 @@ import EditUser from "./EditUser";
 import DeleteDialog from "./DeleteDialog"
 // import { useSelector} from "react-redux";
 
-const SingleCard = ({ item, key, ...prop }) => {
+const SingleCard = ({ item, key, setIsGetUser, ...prop }) => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  
 
     const handleClickOpen = () => {
       setOpen(true);
     };
   
   const refreshUser = () => {
-    prop.setIsGetUser(true);
+  setIsGetUser(true);
   };
 
   const removeUser = () => {
     prop.deleteUser(item.user_id);
+    setOpen(false);
   };
 
   const handleClick = (event) => {

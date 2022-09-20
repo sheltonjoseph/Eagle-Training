@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import SingleCard from "./User";
 
-const Users = () => {
+const Users = ({isGetUser,setIsGetUser}) => {
   const [users, setUsers] = useState([]);
 
 
@@ -29,10 +29,10 @@ const Users = () => {
     }
   };
 
-  const [isGetUser, setIsGetUser] = useState(true)
+
 
   useEffect(() => {
-    if(isGetUser) {
+    if(isGetUser)  {
      getUsers();
      setIsGetUser(false)
     }
@@ -41,7 +41,7 @@ const Users = () => {
   return (
     <Container>
       {users.reverse().map((item) => (
-      <SingleCard item={item} deleteUser={deleteUser} setIsGetUser={setIsGetUser}/>
+      <SingleCard item={item} deleteUser={deleteUser} setIsGetUser={setIsGetUser} />
        ))}
     </Container>
   );
